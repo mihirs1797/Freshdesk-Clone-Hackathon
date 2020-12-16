@@ -7,7 +7,6 @@ async function getApiData() {
         });
     var tickets = await getTickets.json();
     console.log(tickets);
-
     
     var openCount = 0;
     var responderCount = 0;

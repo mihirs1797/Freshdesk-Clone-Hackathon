@@ -15,19 +15,23 @@
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
 
-<body>
+<body onload="createCard()">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-4 col-md-2 col-lg-1">
                 <div class="sidebar mx-auto">
-                    <a class="navbar-brand" href="dashboard.html"><img class="logo" src="images/logo.png" alt="logo pic"></a>
+                    <a class="navbar-brand" href="dashboard.html"><img class="logo" src="images/logo.png"
+                            alt="logo pic"></a>
                     <br>
                     <ul class="nav flex-column text-white">
-                        <li class="nav-item text-center mt-3"><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i></a>
+                        <li class="nav-item text-center mt-3"><a href="dashboard.html"><i
+                                    class="fas fa-tachometer-alt"></i></a>
                         </li>
-                        <li class="nav-item text-center mt-3"><a href="ticket.html"><i class="fas fa-ticket-alt"></i></a>
+                        <li class="nav-item text-center mt-3"><a href="ticket.html"><i
+                                    class="fas fa-ticket-alt"></i></a>
                         </li>
-                        <li class="nav-item text-center mt-3"><a href="contacts.html"><i class="fas fa-phone"></i></a></li>
+                        <li class="nav-item text-center mt-3"><a href="contacts.html"><i class="fas fa-phone"></i></a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -37,39 +41,96 @@
                 </div>
                 <hr>
                 <div class="row">
-                    <button class="btn btn-inline btn-md btn-outline-dark">Create Ticket</button>
-                    <button class="btn btn-inline btn-md btn-outline-dark disabled ml-3">Delete Ticket</button>
+                    <button class="btn btn-inline btn-md btn-outline-dark" data-toggle="modal"
+                        data-target="#newTicket">Create Ticket</button>
                 </div>
                 <hr>
                 <p>List of tickets</p>
                 <hr>
                 <div class="container" id="ticketHolder">
-                    <!-- <div class="row">
-                        <div class="card" style="width: 100%;">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-1">
-                                        <input type="checkbox" id="ticketCheck">
-                                    </div>
-                                    <div class="col-lg-7">
-                                        
-                                    </div>
-                                    <div class="col-lg-2">
-                                        Status
-                                    </div>
-                                    <div class="col-lg-2">
-                                        Priority
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
                 <hr>
             </div>
         </div>
     </div>
 
+    <div class="modal fade" id="newTicket" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Create New Ticket</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="newTicketSubject">Contact</label>
+                        <input type="email" class="form-control" name="" id="newTicketContact"
+                            placeholder="abc@123.com" required>
+                        <br>
+                        <label for="newTicketSubject">Subject</label>
+                        <input type="text" class="form-control" name="" id="newTicketSubject"
+                            placeholder="Order not received" required>
+                        <br>
+                        <div class="form-group">
+                            <label for="newTicketStatus">Status</label>
+                            <select class="form-control" id="newTicketStatus">
+                                <option value="2">Open</option>
+                                <option value="3">Pending</option>
+                                <option value="4">Resolved</option>
+                                <option value="5">Closed</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="newTicketPriority">Priority</label>
+                            <select class="form-control" id="newTicketPriority">
+                                <option value="1">Low</option>
+                                <option value="2">Medium</option>
+                                <option value="3">High</option>
+                                <option value="4">Closed</option>
+                            </select>
+                        </div>
+                        <br>
+                        <label for="newTicketDescription">Description</label>
+                        <textarea class="form-control rounded-0" id="descriptionText" rows="6"></textarea>
+                        <br>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="createTicket()">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ticketDescription" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ticketSubject">Ticket info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <p id="descriptionOfTicket"></p>
+                    <br><br>
+                    <div class="text-left">
+                        <p id="modalStatus"></p>
+                        <p id="modalPriority"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
